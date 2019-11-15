@@ -12,6 +12,15 @@ class Pengajuan extends REST_Controller {
         $this->load->database();
     }
 
+    //Menampilkan Jumlah Pengajuan
+    function count_get() {
+        $currentDate = date('Y/m/d');
+        $data = $this->db->query("SELECT COUNT(*) AS Jumlah FROM pengajuan WHERE tgl_pengajuan = '" . $currentDate . "' AND status = 'menunggu'");
+        $hasil = $data->row();
+        
+        echo $hasil->Jumlah;
+    }
+
     //Menampilkan data kontak
     function index_get() {
         $id = $this->get('id');
@@ -28,7 +37,15 @@ class Pengajuan extends REST_Controller {
         $data = array(
                     'id'           => $this->post('id'),
                     'users'        => $this->post('users'),
-                    'deskripsi'    => $this->post('deskripsi'));
+                    'id_barang'    => $this->post('id_barang'),
+                    'nim'          => $this->post('nim'),
+                    'qty'          => $this->post('qty'),
+                    'deskripsi'    => $this->post('deskripsi'),
+                    // 'tgl_pengajuan'=> $this->load->helper('date'),
+                    'tgl_pemakaian'=> $this->post('tgl_pemakaian'),
+                    'surat'        => $this->post('surat'),
+                    // 'status'       => $this->post('menunggu')
+                );
         $insert = $this->db->insert('pengajuan', $data);
         if ($insert) {
             $this->response($data, 200);

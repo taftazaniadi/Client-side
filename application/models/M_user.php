@@ -8,9 +8,9 @@ class M_user extends CI_Model
 		$tampung = $this->db->query("select * from contact " . $wher);
 		return $tampung->result_array();
 	}
-	public function insert($namatable, $data, $email)
+	public function insert($namatable, $data)
 	{
-		$tampung = $this->db->insert($namatable, $data, $email);
+		$tampung = $this->db->insert($namatable, $data);
 		return $tampung;
 	}
 	public function update($table, $data, $acuan)

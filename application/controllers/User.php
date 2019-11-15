@@ -60,7 +60,7 @@ class User extends CI_Controller
 	public function doaddpengajuan()
 	{
 		$this->load->library('Minta');
-		$this->load->library('mailer');
+		// $this->load->library('mailer');
 		$user = $this->ion_auth->user()->row();
 		$id = $_POST['id'];
 		$users = $this->ion_auth->get_user_id();
@@ -72,48 +72,37 @@ class User extends CI_Controller
 		$datenow = date('Y-m-d');
 		$tgl_pemakaian = $_POST['tgl_pemakaian'];
 		$status = 'menunggu';
-		$email_penerima = $this->ion_auth->get_user_email();
-		$content = $this->load->view('content', array('deskripsi' => $deskripsi), true);
 		if (isset($_POST['simpan'])) {
 			$surat = $_FILES['surat']['name'];
 		}
 
-		// $this->load->library('upload');
-		// $config['upload_path']          = 'public';
-		// $config['allowed_types']        = 'pdf|doc|docx|png|jpg';
-		// $config['overwrite']            = true;
-		// $config['max_size']             = 1000;
-		// $config['max_width']            = 10024;
-		// $config['max_height']           = 7068;
+		$this->load->library('upload');
+		$config['upload_path']          = 'public';
+		$config['allowed_types']        = 'pdf|doc|docx|png|jpg';
+		$config['overwrite']            = true;
+		$config['max_size']             = 1000;
+		$config['max_width']            = 10024;
+		$config['max_height']           = 7068;
 
 		// // $this->load->library('upload', $config);
-		// $this->upload->initialize($config);
-		// $this->upload->do_upload('surat');
+		$this->upload->initialize($config);
+		$this->upload->do_upload('surat');
 
 		$data_insert = array(
 			'id' => $id,
 			'users' => $users,
 			'nim' => $nim,
 			'id_barang' => $id_barang,
-			//  'barang' => $barang,
 			'qty' => $qty,
-			'deskripsi' => $content,
+			'deskripsi' => $deskripsi,
 			'tgl_pengajuan' => $datenow,
 			'tgl_pemakaian' => $tgl_pemakaian,
 			'surat' => $surat,
 			'status' => $status
 		);
 
-		$tampung = $this->m_user->insert('pengajuan', $data_insert, $email_penerima);
+		$tampung = $this->m_user->insert('pengajuan', $data_insert);
 		if ($tampung >= 1) {
-			$upload = $this->EmailModel->upload();
-			if ($upload['status'] == 'sukses') { // Jika file berhasil diupload
-				// Tambahkan index attachment ke array sendmail yang isinya adalah path file yang akan dikirim
-				$data_insert['surat'] = $upload['file']['full_path'];
-				$send = $this->mailer->send_with_attachment($data_insert, $email_penerima); // Panggil fungsi send_with_attachment yang ada di librari Mailer
-			} else { // Jika file gagal diupload
-				$send = array('status' => 'Gagal', 'message' => $upload['error']);
-			}
 			$response = Requests::post("https://reguler.zenziva.net/apps/smsapi.php?userkey=inyq2l&passkey=dikiharif&nohp=082328722687&pesan={$user->first_name}_{$user->phone}_{$user->company}_{$barang}_{$deskripsi}");
 			//var_dump($response->body);
 			echo "<script>window.alert('Terima Kasih, Pengajuan Peminjaman Telah Berhasil. Silahkan Konfirmasi pengajuan ke Bagian Kerumahtanggan AMCC.');</script>";
