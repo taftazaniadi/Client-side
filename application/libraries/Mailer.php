@@ -25,17 +25,18 @@ class Mailer
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->Username = $this->email_pengirim; // Email Pengirim
-        $mail->Password = 'vfmopfflcjuquvza'; // Isikan dengan Password email pengirim
+        $mail->Password = 'lworrbqpaucufplc'; // Isikan dengan Password email pengirim
         $mail->Port = 465;
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = 'ssl';
-        // $mail->SMTPDebug = 2; // Aktifkan untuk melakukan debugging
+        //$mail->SMTPDebug = 2; // Aktifkan untuk melakukan debugging
         $mail->setFrom($this->email_pengirim, $this->nama_pengirim);
         $mail->addAddress($data['email_penerima'], '');
         $mail->isHTML(true); // Aktifkan jika isi emailnya berupa html
-        $mail->Subject = $data['subjek'];
-        $mail->Body = $data['deskripsi'];
+        $mail->Subject = 'Pengajuan Peminjaman Inventaris AMCC';
+        $mail->Body = $data['surat'];
         $mail->AddEmbeddedImage('image/logo.png', 'logo', 'logo.png'); // Aktifkan jika ingin menampilkan gambar dalam email
+        //$mail->addAttachment($data['surat']);
         $send = $mail->send();
         if ($send) { // Jika Email berhasil dikirim
             $response = array('status' => 'Sukses', 'message' => 'Email berhasil dikirim');
@@ -51,7 +52,7 @@ class Mailer
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->Username = $this->email_pengirim; // Email Pengirim
-        $mail->Password = 'vfmopfflcjuquvza'; // Isikan dengan Password email pengirim
+        $mail->Password = 'lworrbqpaucufplc'; // Isikan dengan Password email pengirim
         $mail->Port = 465;
         $mail->SMTPAuth = true;
         $mail->SMTPSecure = 'ssl';
@@ -60,7 +61,7 @@ class Mailer
         $mail->addAddress($email, '');
         $mail->isHTML(true); // Aktifkan jika isi emailnya berupa html
         $mail->Subject = 'Pengajuan Peminjaman Inventaris AMCC';
-        $mail->Body = $data['deskripsi'];
+        $mail->Body = $data['content'];
         $mail->AddEmbeddedImage('image/logo.png', 'logo', 'logo.png'); // Aktifkan jika ingin menampilkan gambar dalam email
         $mail->addAttachment($data['surat']);
         $send = $mail->send();

@@ -7,6 +7,7 @@
         {
             parent::__construct();
             $this->load->model('EmailModel');
+            $this->load->model('m_user');
         }
 
         public function index()
@@ -17,11 +18,11 @@
         public function send()
         {
             $this->load->library('mailer');
-            $email_penerima = $this->input->post('email_penerima');
-            $subjek = $this->input->post('subjek');
-            $pesan = $this->input->post('pesan');
+            $email_penerima = $this->load->model('email');
+            $subjek = $this->Subject = 'Pengajuan Peminjaman Inventaris AMCC';
+            //$pesan = $this->input->post('pesan');
             $attachment = $_FILES['attachment']['name'];
-            $content = $this->load->view('content', array('pesan' => $pesan), true); // Ambil isi file content.php dan masukan ke variabel $content
+            $content = $this->load->view('content', true); // Ambil isi file content.php dan masukan ke variabel $content
             $sendmail = array(
                 'email_penerima' => $email_penerima,
                 'subjek' => $subjek,

@@ -10,11 +10,11 @@
     <div style="clear: both"></div>
     <hr />
     <div style="text-align: justify">
-        <p>Selamat, pengajuan yang anda ajukan telah <b>disetujui</b> oleh Bagian Departemen Kerumahtanggaan AMCC.<br>
-            Silahkan untuk mengunjungi Ruang Sekretariat AMCC untuk mengambil barang yang diajukan.<br><br>
+        <p>Mohon maaf, pengajuan yang anda ajukan <b>tidak disetujui</b> oleh Bagian Departemen Kerumahtanggaan AMCC.<br>
+            Silahkan untuk mengunjungi Ruang Sekretariat AMCC untuk menanyakan barang yang diajukan.<br><br>
 
             Terima kasih.<br>
-            ================================================================================<br>
+            ====================================================================================<br>
             Regards<br>
             Departemen Kerumahtanggaan || AMCC<br>
         </p>
