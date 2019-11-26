@@ -33,6 +33,15 @@ class M_user extends CI_Model
 		return $query->result_array();
 	}
 
+	public function Get_Email($id)
+	{
+		$this->db->select('email');
+		$this->db->from('users');
+		$this->db->join('pengajuan', 'pengajuan.users = users.id', 'left');
+		$this->db->where('pengajuan.id', $id);
+		$query = $this->db->get();
+		return implode("|",$query->row_array());
+	}
 
 	public function GetRow($keyword)
 	{
