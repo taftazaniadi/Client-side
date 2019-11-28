@@ -153,7 +153,7 @@ class Admin extends CI_Controller
 		$email_penerima = $this->m_user->get_email($id);
 		$subjek = $this->Subject = 'Pengajuan Peminjaman Inventaris AMCC';
 		//$attachment = $_FILES['attachment']['name'];
-		$surat = '';
+		$surat = $this->m_user->get_desc($id);
 		$content = $this->load->view('content', array('surat' => $surat), true); // Ambil isi file content.php dan masukan ke variabel $content
 		$sendmail = array(
 			'email_penerima' => $email_penerima,
@@ -178,10 +178,10 @@ class Admin extends CI_Controller
 		if ($tampung >= 1 && $tangkap >= 1) {
 			$send = $this->mailer->send($sendmail);
 			echo "<script>window.alert('Pengajuan peminjaman telah di terima dan Email sudah dikirim ke Peminjam');</script>";
-			redirect('admin/list', 'refresh');
+			// redirect('admin/list', 'refresh');
 			$response = Requests::post("https://reguler.zenziva.net/apps/smsapi.php?userkey=inyq2l&passkey=dikiharif&nohp=$hp&pesan=Pengajuan disetujui, silahkan mengambil barang pada Dept Kerumahtanggaan AMCC (082328722687)");
 			//var_dump($response->body);
-			echo $email_penerima;
+			echo $content;
 		} else {
 			$this->load->view('admin/500');
 		}
@@ -191,7 +191,7 @@ class Admin extends CI_Controller
 	{
 		$this->load->library('mailer');
 
-		$email_penerima = $this->ion_auth->get_user_email();
+		$email_penerima = $this->m_user->get_email($id);
 		$subjek = $this->Subject = 'Pengajuan Peminjaman Inventaris AMCC';
 		//$attachment = $_FILES['attachment']['name'];
 		$surat = '';

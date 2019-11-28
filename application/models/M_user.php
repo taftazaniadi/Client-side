@@ -40,7 +40,16 @@ class M_user extends CI_Model
 		$this->db->join('pengajuan', 'pengajuan.users = users.id', 'left');
 		$this->db->where('pengajuan.id', $id);
 		$query = $this->db->get();
-		return implode("|",$query->row_array());
+		return implode("|", $query->row_array());
+	}
+
+	public function Get_Desc($id)
+	{
+		$this->db->select('deskripsi');
+		$this->db->from('pengajuan');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		return implode("|", $query->row_array());
 	}
 
 	public function GetRow($keyword)
