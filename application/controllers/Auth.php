@@ -45,6 +45,16 @@ class Auth extends CI_Controller {
 		}
 	}
 
+	public function special_login()
+	{
+		if ($this->ion_auth->login($this->input->get('identity'), $this->input->get('password'), $remember=FALSE))
+			{
+				if ($this->ion_auth->in_group('admin')) {
+					redirect ('/admin/pengajuan');
+				}
+			}
+	}
+
 	// log the user in
 	public function login()
 	{

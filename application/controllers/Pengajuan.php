@@ -21,16 +21,41 @@ class Pengajuan extends REST_Controller {
         echo $hasil->Jumlah;
     }
 
+    //Menampilkan Data Pengajuan
+    // function transaksi()
+    // {
+    //     $currentDate = date('Y/m/d');
+    //     $status = "menunggu";
+        
+    //     if ($currentDate) 
+    //     {
+    //         $this->db->join('users.id', 'pengajuan.users');
+    //         $this->db->where('pengajuan.tgl_pengajuan', $currentDate);
+    //         $this->db->where('pengajuan.status', $status);
+    //         $data = $this->db->get('pengajuan')->result();
+    //     }
+    //     $this->response($data, 200);
+    // }
+
     //Menampilkan data kontak
     function index_get() {
-        $id = $this->get('id');
-        if ($id == '') {
-            $pengajuan = $this->db->get('pengajuan')->result();
-        } else {
-            $this->db->where('id', $id);
-            $pengajuan = $this->db->get('pengajuan')->result();
+        // $id = $this->get('id');
+        // if ($id == '') {
+        //     $pengajuan = $this->db->get('pengajuan')->result();
+        // } else {
+        //     $this->db->where('id', $id);
+        //     $pengajuan = $this->db->get('pengajuan')->result();
+        // }
+        // $this->response($pengajuan, 200);
+
+        $currentDate = date('Y/m/d');
+        $status = "menunggu";
+        
+        if ($currentDate) 
+        {
+            $data = $this->db->query("SELECT u.first_name, u.company FROM pengajuan p JOIN users u ON u.id = p.users WHERE p.status = '" . $status . "' AND p.tgl_pengajuan = '" . $currentDate . "'")->result();
         }
-        $this->response($pengajuan, 200);
+        $this->response($data, 200);
     }
 
     function index_post() {
